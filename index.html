@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Magnific Popup core CSS file -->
+    <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
+
+
+</head>
+
+<body>
+    <input type="file" onchange="encodeImageFileAsURL(this)" />
+    <div id="parentId"></div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <!-- Magnific Popup core JS file -->
+    <script src="magnific-popup/jquery.magnific-popup.js"></script>
+    <script>
+        var image = new Image();
+
+        function encodeImageFileAsURL(element) {
+            var file = element.files[0];
+            console.log(file);
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                image.src = reader.result;
+                console.log(image.src);
+                console.log('RESULT', reader.result)
+                var p = document.getElementById('parentId');
+                var newElement = document.createElement("a");
+                newElement.setAttribute('href', image.src);
+                newElement.setAttribute('id', 'preview');
+                newElement.innerHTML = 'Open Image';
+                p.appendChild(newElement);
+                $('#preview').magnificPopup({
+                    type: 'image'
+                });
+
+
+            }
+            reader.readAsDataURL(file);
+
+            /*  //Just getting the source from the span. It was messy in JS.
+              $('#open-popup').magnificPopup({
+                  type: 'image',
+                  src: image.src
+                  // other options
+              });*/
+        }
+    </script>
+</body>
+
+</html>
